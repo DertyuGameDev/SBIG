@@ -6,13 +6,20 @@ using UnityEngine.UI;
 
 public class MicrophoneInput : MonoBehaviour
 {
-    public int sampleWindow = 64;
+    int sampleWindow = 64;
     public string nameMicro;
-    public float maxSenc, minSens;
+    [Header("Attribute Settings")]
+    public float maxSenc;
+    public float minSens;
     public float sensitivityMicrophone;
     public float thresold;
+    public static Bonus bonus = null;
+
     AudioClip clip;
-    public Slider slider, sensSlider;
+
+    [Header("UI")]
+    public Slider slider;
+    public Slider sensSlider;
     public TMP_Dropdown drop;
 
     public void MicrophoneChoose()
@@ -63,6 +70,13 @@ public class MicrophoneInput : MonoBehaviour
 
         if (loud < thresold) { loud = 0; }
         print(loud);
-        slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");
+        if (bonus)
+        {
+            slider.value = loud * PlayerPrefs.GetFloat("Sensitivity") + bonus.bonusToVoice;
+        }
+        else
+        {
+            slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");
+        }
     }
 }
