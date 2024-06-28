@@ -19,11 +19,11 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI costText;
     public State state;
 
-    public void Buy()
+    public void Buy(Traders trader)
     {
         if (state == State.SELECT)
         {
-            PlayerPrefs.SetString("NowBonus", nameText.text);
+            PlayerPrefs.SetString("NowBonus" + trader.nameTrader, nameText.text);
             PlayerPrefs.SetInt(nameText.text, 2);
             return;
         }
@@ -31,22 +31,22 @@ public class Card : MonoBehaviour
         {
             return;
         }
-        if (PlayerPrefs.GetInt("Money", 0) - Convert.ToInt32(costText.text.Substring(0, costText.text.Length - 2)) >= 0 
+        if (PlayerPrefs.GetInt("Money" + trader.nameTrader, 0) - Convert.ToInt32(costText.text.Substring(0, costText.text.Length - 2)) >= 0 
             && state == State.BUY)
         {
-            PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money", 0) - Convert.ToInt32(costText.text.Substring(0, costText.text.Length - 2)));
-            PlayerPrefs.SetString("NowBonus", nameText.text);
+            PlayerPrefs.SetInt("Money" + trader.nameTrader, PlayerPrefs.GetInt("Money" + trader.nameTrader, 0) - Convert.ToInt32(costText.text.Substring(0, costText.text.Length - 2)));
+            PlayerPrefs.SetString("NowBonus" + trader.nameTrader, nameText.text);
             PlayerPrefs.SetInt(nameText.text, 2);
         }
     }
 
     private void Update()
     {
-        if (PlayerPrefs.GetString("NowBonus", "") != "" && PlayerPrefs.GetString("NowBonus") == nameText.text)
+        if (PlayerPrefs.GetString("NowBonusTraders", "") != "" && PlayerPrefs.GetString("NowBonusTraders") == nameText.text)
         {
             MicrophoneInput.bonus = bonus;
         }
-        if (state == State.SELECTED && PlayerPrefs.GetString("NowBonus") != nameText.text) 
+        if (state == State.SELECTED && PlayerPrefs.GetString("NowBonusTraders") != nameText.text) 
         {
             PlayerPrefs.SetInt(nameText.text, 1);
         }

@@ -8,11 +8,13 @@ public class MicrophoneInput : MonoBehaviour
 {
     int sampleWindow = 64;
     public string nameMicro;
+    public float result;
     [Header("Attribute Settings")]
     public float maxSenc;
     public float minSens;
     public float sensitivityMicrophone;
     public float thresold;
+    public Traders me;
     public static Bonus bonus = null;
 
     AudioClip clip;
@@ -24,7 +26,14 @@ public class MicrophoneInput : MonoBehaviour
 
     public void MicrophoneChoose()
     {
-        nameMicro = Microphone.devices[drop.value];
+        if (drop)
+        {
+            nameMicro = Microphone.devices[drop.value];
+        }
+        else
+        {
+            nameMicro = Microphone.devices[0];
+        }
         clip = Microphone.Start(nameMicro, true, 20, AudioSettings.outputSampleRate);
     }
 
@@ -48,35 +57,43 @@ public class MicrophoneInput : MonoBehaviour
     }
     private void Start()
     {
-        List<TMP_Dropdown.OptionData> listOptions = new List<TMP_Dropdown.OptionData>();
-
-        for (int i = 0; i < Microphone.devices.Length; i++)
+        if (drop && sensSlider)
         {
-            TMP_Dropdown.OptionData g = new TMP_Dropdown.OptionData();
-            g.text = Microphone.devices[i];
-            listOptions.Add(g);
+            List<TMP_Dropdown.OptionData> listOptions = new List<TMP_Dropdown.OptionData>();
+
+            for (int i = 0; i < Microphone.devices.Length; i++)
+            {
+                TMP_Dropdown.OptionData g = new TMP_Dropdown.OptionData();
+                g.text = Microphone.devices[i];
+                listOptions.Add(g);
+            }
+            drop.options = listOptions;
+            sensSlider.minValue = minSens;
+            sensSlider.maxValue = maxSenc;
+            sensSlider.value = PlayerPrefs.GetFloat("Sensitivity", 1);
         }
-        drop.options = listOptions;
-        sensSlider.minValue = minSens; 
-        sensSlider.maxValue = maxSenc; 
-        sensSlider.value = PlayerPrefs.GetFloat("Sensitivity", 1);
         MicrophoneChoose();
     }
     private void Update()
     {
-        PlayerPrefs.SetFloat("Sensitivity", sensSlider.value);
-        sensitivityMicrophone = sensSlider.value;
+        if (sensSlider)
+        {
+            PlayerPrefs.SetFloat("Sensitivity", sensSlider.value);
+            sensitivityMicrophone = sensSlider.value;
+        }
         float loud = GetLouder(Microphone.GetPosition(nameMicro), clip);
 
         if (loud < thresold) { loud = 0; }
-        print(loud);
         if (bonus)
         {
+            result = loud * PlayerPrefs.GetFloat("Sensitivity") + bonus.bonusToVoice;
             slider.value = loud * PlayerPrefs.GetFloat("Sensitivity") + bonus.bonusToVoice;
         }
         else
         {
+            result = loud * PlayerPrefs.GetFloat("Sensitivity");
             slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");
         }
+        me.voiceStrenght = result;
     }
 }
