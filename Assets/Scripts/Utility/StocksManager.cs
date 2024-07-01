@@ -5,18 +5,45 @@ using TMPro;
 
 public class StocksManager : MonoBehaviour
 {
+    public static Traders MainPerson;
     public static int countDays;
-    public float time;
-    public List<Traders> traders;
+    public static float moneyStart = 0;
     public static Func<float, string> IsThereAnyMoney;
     public static Dictionary<string, Vector3> positions = new Dictionary<string, Vector3>();
-    public List<Transform> stands = new List<Transform>();
     public static Dictionary<string, Traders> dTr = new Dictionary<string, Traders>();
+
+    public GameObject spawner, stocks;
+    public Animator animator;
     public TextMeshProUGUI timer;
     public bool startGame = true;
+    public float time;
+
+    public List<TradersNPC> npcList = new List<TradersNPC>();
     public List<Traders> rating = new List<Traders>();
+    public List<float> moneys = new List<float>();
+    public List<Traders> traders;
+    public List<Transform> stands = new List<Transform>();
     private void Awake()
     {
+        foreach (var item in traders)
+        {
+            PlayerPrefs.SetFloat("Money" + item.nameTrader, 0);
+            if (item.nameTrader == "Gosha")
+            {
+                MainPerson = item;
+            }
+            moneys.Add(0);
+        }
+        for (int i = 0; i < traders.Count; i++)
+        {
+            for (int j = 0; j < traders.Count; j++)
+            {
+                if (traders[i] != traders[j])
+                {
+                    traders[i].BuyPrecents(traders[j], 5);
+                }
+            }
+        }
         rating = traders;
         foreach(var item in traders)
         {
@@ -36,6 +63,7 @@ public class StocksManager : MonoBehaviour
     {
         foreach(var trader in traders)
         {
+            trader.limitToSell += Mathf.RoundToInt(trader.countBuyToday * 0.5f);
             trader.UpDownCost();
         }
         foreach (var trader in traders)
@@ -94,28 +122,41 @@ public class StocksManager : MonoBehaviour
     }
     private void Update()
     {
+        foreach (var item in traders)
+        {
+            item.precents.Clear();
+        }
+        for (int i = 0;i < moneys.Count; i++)
+        {
+            moneys[i] = PlayerPrefs.GetFloat("Money" + traders[i].nameTrader, 0);
+        }
         if (time > 0 && startGame)
         {
+            animator.SetBool("Open", false);
             time -= Time.deltaTime;
             timer.text = Mathf.RoundToInt(time).ToString();
         }
         if (time <= 0 && startGame)
         {
+            EndDay();
+            foreach (var k in npcList)
+            {
+                k.gameObject.GetComponent<AudioSource>().enabled = false;
+                k.SetState(k.buyStockBonus);
+            }
             startGame = false;
             timer.text = 0.ToString();
+            spawner.SetActive(false);
+            stocks.SetActive(true);
+            animator.SetBool("Open", true);
             foreach (var item in GameObject.FindGameObjectsWithTag("NPC"))
             {
                 Destroy(item.gameObject);
             }
-            foreach(var k in traders)
-            {
-                k.limitToSell += Mathf.RoundToInt(k.countBuyToday * 0.5f);
-                k.UpDownCost();
-            }
-            foreach (var k in traders)
-            {
-                k.GivePrecents();
-            }
+            //foreach (var trader in traders)
+            //{
+            //    trader.ShowPrecent();
+            //}
         }
         // Debug
         rating = BubbleSort(rating);

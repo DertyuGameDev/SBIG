@@ -12,36 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3373e193ffa73ef4a8edf86459ae5325, type: 3}
   m_Name: Traders1
   m_EditorClassIdentifier: 
+  MyPortret: {fileID: 4329407632164072968, guid: 405175f1cab4aa54d896881688c78e67, type: 3}
   nameTrader: Sviat
   costOneStock: 10
   countStocksNow: 0
+  main: 0
   countBuyToday: 0
   countSellToday: 0
+  limitToSell: 10
   total: 0
   upCost: 0
   voiceStrenght: 0
-  sellCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 3.0700722
-      value: 2.0020447
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  precents: []
   stocksInfo: []

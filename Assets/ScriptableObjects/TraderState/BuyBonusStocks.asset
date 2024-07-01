@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260900f807115da459d3868041697402, type: 3}
+  m_Name: BuyBonusStocks
+  m_EditorClassIdentifier: 
+  IsFinished: 0
+  trader: {fileID: 0}
+  money: 0
+  bonuses:
+  - state: 0
+    cost: 50
+    nameBonus: Horn
+    bonus: {fileID: 11400000, guid: ec7e249c01ae5cc498a6d87590f6497f, type: 2}
+  - state: 0
+    cost: 30
+    nameBonus: Green
+    bonus: {fileID: 11400000, guid: 0ea2b801fd085274db65aa31b347d7ed, type: 2}
+  - state: 0
+    cost: 20
+    nameBonus: Blue
+    bonus: {fileID: 11400000, guid: 6323bc5ca2977b24abdbd327767ae1be, type: 2}
+  - state: 0
+    cost: 10
+    nameBonus: Red
+    bonus: {fileID: 11400000, guid: a299adf315884ae4e9dbfaf805411935, type: 2}
