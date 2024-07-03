@@ -12,11 +12,13 @@ public class WalkRandom : Stating
     }
     public override void Doing()
     {
-        if (Vector3.Distance(npc.transform.position, npc.posOfStation) <= radius)
+        if (Vector3.Distance(npc.transform.position, new Vector3(1, 1, 0)) <= radius)
         {
+            npc.nav.isStopped = true;
             npc.SetState(idle);
             return;
         }
-        npc.MoveToStand();
+        npc.nav.isStopped = false;
+        npc.MoveTo(new Vector3(1, 1, 0));
     }
 }

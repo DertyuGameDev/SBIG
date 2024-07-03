@@ -139,10 +139,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameMicro: 
+  result: 0
   maxSenc: 100
   minSens: 1
   sensitivityMicrophone: 50
   thresold: 0
+  me: {fileID: 11400000, guid: 4f4ec4e6032d03244bc41fd2dde342cd, type: 2}
   slider: {fileID: 3101631873685923201}
   sensSlider: {fileID: 0}
   drop: {fileID: 0}

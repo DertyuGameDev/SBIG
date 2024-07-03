@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 7701312651590085523}
   - component: {fileID: 1927664415767343934}
   - component: {fileID: 4976294706896376234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: New Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7701312651590085523
 Transform:
@@ -110,12 +110,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3499177763602689462}
   - component: {fileID: 3618596032292232625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: XDivision
-  m_TagString: Untagged
+  m_TagString: Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3499177763602689462
 Transform:

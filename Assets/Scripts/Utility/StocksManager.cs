@@ -9,11 +9,11 @@ public class StocksManager : MonoBehaviour
     public static int countDays;
     public static float moneyStart = 0;
     public static Func<float, string> IsThereAnyMoney;
-    public static Dictionary<string, Vector3> positions = new Dictionary<string, Vector3>();
+    public static Dictionary<string, Transform> positions = new Dictionary<string, Transform>();
     public static Dictionary<string, Traders> dTr = new Dictionary<string, Traders>();
 
-    public GameObject spawner, stocks;
-    public Animator animator;
+    public GameObject spawner;
+    public Animator animator, stock;
     public TextMeshProUGUI timer;
     public bool startGame = true;
     public float time;
@@ -55,7 +55,7 @@ public class StocksManager : MonoBehaviour
                 stands[i].transform.gameObject.GetComponent<TradersNPC>().me = traders[i];
             else
                 stands[i].transform.gameObject.GetComponent<MicrophoneInput>().me = traders[i];
-            positions.Add(traders[i].nameTrader, stands[i].position);
+            positions.Add(traders[i].nameTrader, stands[i]);
         }
         IsThereAnyMoney += ChekerMoney;
     }
@@ -120,7 +120,7 @@ public class StocksManager : MonoBehaviour
 
         return array;
     }
-    private void Update()
+    public void Update()
     {
         foreach (var item in traders)
         {
@@ -147,7 +147,7 @@ public class StocksManager : MonoBehaviour
             startGame = false;
             timer.text = 0.ToString();
             spawner.SetActive(false);
-            stocks.SetActive(true);
+            stock.SetBool("Open", true);
             animator.SetBool("Open", true);
             foreach (var item in GameObject.FindGameObjectsWithTag("NPC"))
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Walk : Stating
 {
     public float radius;
-    public float time;
+    [HideInInspector] public float time;
     public float maxTime;
     public Stating idle, buy;
     public override void Init()
@@ -14,17 +14,20 @@ public class Walk : Stating
     }
     public override void Doing()
     {
-        if (Vector2.Distance(npc.transform.position, npc.posOfStation) <= radius) 
+        if (Vector2.Distance(npc.transform.position, npc.posOfStation.position) <= radius) 
         {
+            npc.nav.isStopped = true;
             npc.SetState(buy);
             return;
         }
         time += Time.deltaTime;
         if (time >= maxTime)
         {
+            npc.nav.isStopped = true;
             npc.SetState(idle);
             return;
         }
+        npc.nav.isStopped = false;
         npc.MoveToStand();
     }
 }

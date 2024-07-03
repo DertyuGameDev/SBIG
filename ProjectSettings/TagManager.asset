@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - NPC
+  - Point
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Graph
+  - NPC
   - 
   - 
   - 

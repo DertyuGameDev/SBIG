@@ -7,6 +7,7 @@ public class Buy : Stating
     public float chance;
     public float timeMind;
     public float time;
+    public float radius;
     public Stating walkState;
     public override void Init()
     {
@@ -14,6 +15,12 @@ public class Buy : Stating
     }
     public override void Doing()
     {
+        if (Vector3.Distance(npc.transform.position, npc.posOfStation.position) > radius)
+        {
+            npc.nav.isStopped = true;
+            npc.SetState(npc.walkState);
+            return;
+        }
         time += Time.deltaTime;
         if (time < timeMind)
         {
@@ -22,15 +29,17 @@ public class Buy : Stating
         float h = Random.Range(0, 100);
         if (h <= chance)
         {
+            npc.nav.isStopped = true;
             Traders tr = StocksManager.dTr[npc.nameTr];
             tr.countBuyToday += 1;
             npc.money -= tr.costOneStock;
-            npc.posOfStation = Vector3.zero;
+            npc.posOfStation = null;
             npc.SetState(walkState);
         }
         else
         {
-            npc.posOfStation = Vector3.zero;
+            npc.nav.isStopped = true;
+            npc.posOfStation = null;
             npc.SetState(walkState);
         }
     }

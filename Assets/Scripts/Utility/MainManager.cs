@@ -1,18 +1,43 @@
+using TMPro;
 using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
+    public Traders def;
+    public Traders me;
     public graph graph_;
-    Vector3[] RandArr;
-
-    void Start()
+    public Vector3[] RandArr;
+    GameObject[] points;
+    public TextMeshProUGUI nameText, dayCostText;
+    private void Start()
     {
-        RandArr = new Vector3[Random.Range(3, 10)];
-        for (int i = 0; i / 2 < RandArr.Length; i = i + 2)
-            RandArr[i / 2] = new Vector3(Random.Range(i, i + 2), Random.Range(0, 10), 0);
+        me = def;
+        MakeGraph();
+    }
+    private void Update()
+    {
+        dayCostText.text = graph_.GetDay();
+        nameText.text = me.nameTrader + "`s cost of all stocks:";
+        if (GameObject.FindGameObjectsWithTag("Point").Length < me.stocksInfo.Count + graph_.AmounXCivivsons + graph_.AmounYCivisions)
+            MakeGraph();
+    }
+    void MakeGraph()
+    {
+        foreach(var r in GameObject.FindGameObjectsWithTag("Point")) 
+        { 
+            Destroy(r);
+        }
+        RandArr = new Vector3[me.stocksInfo.Count];
+        for (int i = 0; i  < me.stocksInfo.Count; i++)
+            RandArr[i] = new Vector3(i, me.stocksInfo[i] / 1000, 0);
 
         graph_.xOy();
         graph_.DrowGraph(RandArr);
-        graph_.LocateGraph(RandArr);
+    }
+
+    public void SetTrader(Traders traders)
+    {
+        me = traders;
+        MakeGraph();
     }
 }

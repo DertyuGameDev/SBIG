@@ -24,6 +24,11 @@ public class MicrophoneInput : MonoBehaviour
     public Slider sensSlider;
     public TMP_Dropdown drop;
 
+    public void OnDisable()
+    {
+        me.voiceStrenght = 0;
+        slider.value = 0;
+    }
     public void MicrophoneChoose()
     {
         if (drop)
@@ -34,7 +39,7 @@ public class MicrophoneInput : MonoBehaviour
         {
             nameMicro = Microphone.devices[0];
         }
-        clip = Microphone.Start(nameMicro, true, 20, AudioSettings.outputSampleRate);
+        clip = Microphone.Start(nameMicro, true, 50, AudioSettings.outputSampleRate);
     }
 
     public float GetLouder(int clipPos, AudioClip clip)

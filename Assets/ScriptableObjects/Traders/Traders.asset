@@ -22,6 +22,11 @@ MonoBehaviour:
   limitToSell: 10
   total: 0
   upCost: 0
-  voiceStrenght: 0
+  voiceStrenght: 0.00038337708
   precents: []
-  stocksInfo: []
+  stocksInfo:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 234

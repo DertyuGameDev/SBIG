@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsFinished: 0
   npc: {fileID: 0}
-  radius: 1
+  radius: 3
   time: 0
   maxTime: 5
   idle: {fileID: 11400000, guid: 0462ccf9128f60d41aab8de21283effa, type: 2}
