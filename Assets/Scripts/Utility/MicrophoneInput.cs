@@ -16,17 +16,19 @@ public class MicrophoneInput : MonoBehaviour
     public float thresold;
     public Traders me;
     public static Bonus bonus = null;
-
-    AudioClip clip;
+    public Bonus insp;
+    public float l;
+    public static AudioClip clip;
 
     [Header("UI")]
     public Slider slider;
     public Slider sensSlider;
     public TMP_Dropdown drop;
-
+    
     public void OnDisable()
     {
-        me.voiceStrenght = 0;
+        if (me)
+            me.voiceStrenght = 0;
         slider.value = 0;
         result = 0;
     }
@@ -82,7 +84,7 @@ public class MicrophoneInput : MonoBehaviour
     }
     private void Update()
     {
-        print(PlayerPrefs.GetFloat("Sensitivity"));
+        insp = bonus;
         if (sensSlider)
         {
             PlayerPrefs.SetFloat("Sensitivity", sensSlider.value);
@@ -106,6 +108,8 @@ public class MicrophoneInput : MonoBehaviour
             result = loud * PlayerPrefs.GetFloat("Sensitivity");
             slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");
         }
-        me.voiceStrenght = result;
+        if (me)
+            me.voiceStrenght = result;
+        l = loud;
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   costOneStock: 10
   countStocksNow: 0
   main: 1
-  countBuyToday: 10
+  countBuyToday: 0
   countSellToday: 0
   limitToSell: 10
   total: 0

@@ -5,39 +5,34 @@ using UnityEngine;
 
 public class SpawnerNPC : MonoBehaviour
 {
-    public static Action stop, start, drop;
+    public static Action drop;
     public GameObject prefabNPC;
     public float delay;
     public GameObject[] pountsSpawner;
     public Animator animator;
+    public int limit;
     public int a;
+    private void OnDisable()
+    {
+        a = 0;
+    }
     private void Start()
     {
         drop += Drop;
-        print(BestBuyManager.getPrecent("Gosha"));
-        stop += Stop;
-        start += Start;
+        StopAllCoroutines();
         StartCoroutine(DelaySpawn());
     }
     public void Drop()
     {
         a -= 1;
     }
-    public void Stop()
-    {
-        StopAllCoroutines();
-    }
-    public void StartSpawn()
-    {
-        StopAllCoroutines();
-        StartCoroutine(DelaySpawn());
-    }
     public void Spawn()
     {
         for (int i = 0;i < pountsSpawner.Length;i++)
         {
-            if (UnityEngine.Random.Range(0, 2) == 1)
+            if (UnityEngine.Random.Range(0, 2) == 1 && a < limit)
             {
+                a += 1;
                 Instantiate(prefabNPC, pountsSpawner[i].transform.position, Quaternion.identity);
             }
         }

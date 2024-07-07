@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ulta
   m_EditorClassIdentifier: 
   cost: 0
-  bonusToVoice: 0.6
+  bonusToVoice: 0.3
   Name: Ulta
   sprite: {fileID: 0}

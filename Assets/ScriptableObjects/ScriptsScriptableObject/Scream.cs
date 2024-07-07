@@ -25,6 +25,10 @@ public class Scream : StatingTraders
             trader.result = loud * 2f;
         }
         trader.me.voiceStrenght = trader.result;
+        if (Random.Range(0, 2) == 1)
+        {
+            trader.me.voiceStrenght += Random.Range(0.1f, 0.5f);
+        }
         IsFinished = true;
     }
 

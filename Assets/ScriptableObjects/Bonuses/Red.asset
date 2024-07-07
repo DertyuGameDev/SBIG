@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Red
   m_EditorClassIdentifier: 
   cost: 100
-  bonusToVoice: 0.1
+  bonusToVoice: 0.05
   Name: Reed
-  sprite: {fileID: 4329407632164072968, guid: 405175f1cab4aa54d896881688c78e67, type: 3}
+  sprite: {fileID: -8110808185987109838, guid: c04cd240f12f16f449dc3fba235c0a88, type: 3}

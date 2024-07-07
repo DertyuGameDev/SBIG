@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(fileName = "Traders", menuName = "Scriptable Objects/Traders")]
 public class Traders : ScriptableObject
 {
+    public float money;
     public Sprite MyPortret;
 
     public string nameTrader;
@@ -62,19 +63,37 @@ public class Traders : ScriptableObject
         stocksInfo.Add(countStocksNow * costOneStock);
         float g = total * costOneStock;
         float freePrecent = BestBuyManager.getPrecent(nameTrader);
-        if (costOneStock <= 0 || freePrecent == 0)
+        if ((costOneStock <= 0 || freePrecent == 0) && nameTrader == "Gosha")
         {
-            // end
+            StocksManager.loseAction();
         }
         stocksInfo[stocksInfo.Count - 1] -= g * (100 - freePrecent) / 100;
         PlayerPrefs.SetFloat("Money" + nameTrader, PlayerPrefs.GetFloat("Money" + nameTrader, 0) + g * freePrecent / 100);
+        int y = 0;
+        if (precentsOfOther.Keys.ToList().Count > 1 && nameTrader == "Gosha")
+        {
+            foreach (var item in precentsOfOther)
+            {
+                foreach (var it in item.Value.ToList())
+                {
+                    if (BestBuyManager.getPrecent(it.Value.nameTrader) == 0)
+                    {
+                        y += 1;
+                    }
+                }
+            }
+        }
+        if (y >= 2 && nameTrader == "Gosha")
+        {
+            StocksManager.winAction();
+        }
     }
     public void BuyPrecents(Traders trader, float precent)
     {
         float p = 0;
         if (precentsOfOther.ContainsKey(trader.nameTrader))
         {
-            foreach (var item in precentsOfOther[trader.nameTrader].Keys)
+            foreach (var item in precentsOfOther[trader.nameTrader].Keys.ToList())
             {
                 p = item;
             }
@@ -86,12 +105,33 @@ public class Traders : ScriptableObject
             precentsOfOther.Add(trader.nameTrader, new Dictionary<float, Traders> { { precent + p, trader } });
         }
     }
+    public void CheckWin()
+    {
+        int y = 0;
+        if (precentsOfOther.Keys.ToList().Count > 1 && nameTrader == "Gosha")
+        {
+            foreach (var item in precentsOfOther)
+            {
+                foreach (var it in item.Value.ToList())
+                {
+                    if (BestBuyManager.getPrecent(it.Value.nameTrader) == 0)
+                    {
+                        y += 1;
+                    }
+                }
+            }
+        }
+        if (y >= 2 && nameTrader == "Gosha")
+        {
+            StocksManager.winAction();
+        }
+    }
     public float SellPrice(string nameT, float precent)
     {
         if (precentsOfOther.Keys.Contains(nameT))
         {
             Dictionary<float, Traders> d = precentsOfOther[nameT];
-            foreach (var k in d.Keys)
+            foreach (var k in d.Keys.ToList())
             {
                 Traders tr = d[k];
                 return tr.countStocksNow * tr.costOneStock * precent / 100;
@@ -104,7 +144,7 @@ public class Traders : ScriptableObject
         if (precentsOfOther.Keys.Contains(nameT))
         {
             Dictionary<float, Traders> d = precentsOfOther[nameT];
-            foreach (var k in d.Keys) 
+            foreach (var k in d.Keys.ToList()) 
             {
                 float pr = k;
                 Traders tr = d[k];
@@ -128,10 +168,10 @@ public class Traders : ScriptableObject
     }
     public void ShowPrecent()
     {
-        foreach (var keys in precentsOfOther.Keys)
+        foreach (var keys in precentsOfOther.Keys.ToList())
         {
             Dictionary<float, Traders> d = precentsOfOther[keys];
-            foreach (var key2 in d.Keys)
+            foreach (var key2 in d.Keys.ToList())
             {
                 Traders tr = d[key2];
                 float pr = key2;
@@ -142,10 +182,10 @@ public class Traders : ScriptableObject
     }
     public void GivePrecents()
     {
-        foreach(var keys in precentsOfOther.Keys)
+        foreach(var keys in precentsOfOther.Keys.ToList())
         {
             Dictionary<float, Traders> d = precentsOfOther[keys];
-            foreach (var key2 in d.Keys)
+            foreach (var key2 in d.Keys.ToList())
             {
                 Traders tr = d[key2];
                 float pr = key2;

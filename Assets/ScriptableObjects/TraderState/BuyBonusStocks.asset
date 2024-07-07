@@ -17,18 +17,18 @@ MonoBehaviour:
   money: 0
   bonuses:
   - state: 0
-    cost: 50
+    cost: 1500
     nameBonus: Horn
     bonus: {fileID: 11400000, guid: ec7e249c01ae5cc498a6d87590f6497f, type: 2}
   - state: 0
-    cost: 30
+    cost: 1000
     nameBonus: Green
     bonus: {fileID: 11400000, guid: 0ea2b801fd085274db65aa31b347d7ed, type: 2}
   - state: 0
-    cost: 20
+    cost: 500
     nameBonus: Blue
     bonus: {fileID: 11400000, guid: 6323bc5ca2977b24abdbd327767ae1be, type: 2}
   - state: 0
-    cost: 10
+    cost: 250
     nameBonus: Red
     bonus: {fileID: 11400000, guid: a299adf315884ae4e9dbfaf805411935, type: 2}

@@ -9,11 +9,12 @@ public class StocksManager : MonoBehaviour
     public static Traders MainPerson;
     public static int countDays;
     public static float moneyStart = 0;
-    public static Action cont;
+    public static Action cont, loseAction, winAction;
     public static Func<float, string> IsThereAnyMoney;
     public static Dictionary<string, Transform> positions = new Dictionary<string, Transform>();
     public static Dictionary<string, Traders> dTr = new Dictionary<string, Traders>();
 
+    public SpawnerNPC spawn;
     public PlayerController playerController;
     public GameObject lose, win;
     public Transform menu;
@@ -49,9 +50,10 @@ public class StocksManager : MonoBehaviour
 
     public void StartGame()
     {
+        Ultra.start();
         startGame = true;
-        time = 160;
-        SpawnerNPC.start();
+        time = 50;
+        spawn.enabled = true;
         menu.DOLocalMoveY(-1165, 0.4f);
         playerController.enabled = true;
         playerController.transform.position = new Vector3(13.86f, -7.421f, 0);
@@ -64,6 +66,8 @@ public class StocksManager : MonoBehaviour
     }
     private void Awake()
     {
+        loseAction += Lose;
+        winAction += Win;
         cont += StartGame;
         foreach (var item in traders)
         {
@@ -72,6 +76,12 @@ public class StocksManager : MonoBehaviour
             {
                 MainPerson = item;
             }
+            item.stocksInfo.Clear();
+            item.stocksInfo.Add(0);
+            item.limitToSell = 10;
+            item.costOneStock = 10;
+            item.countBuyToday = 0;
+            item.countStocksNow = 0;
             moneys.Add(0);
         }
         for (int i = 0; i < traders.Count; i++)
@@ -87,7 +97,10 @@ public class StocksManager : MonoBehaviour
         rating = traders;
         foreach(var item in traders)
         {
-            dTr.Add(item.nameTrader, item);
+            if (!dTr.ContainsKey(item.nameTrader))
+            {
+                dTr.Add(item.nameTrader, item);
+            }
         }
         for (int i = 0; i < traders.Count; i++)
         {
@@ -95,7 +108,8 @@ public class StocksManager : MonoBehaviour
                 stands[i].transform.gameObject.GetComponent<TradersNPC>().me = traders[i];
             else
                 stands[i].transform.gameObject.GetComponent<MicrophoneInput>().me = traders[i];
-            positions.Add(traders[i].nameTrader, stands[i]);
+            if (!positions.ContainsKey(traders[i].nameTrader))
+                positions.Add(traders[i].nameTrader, stands[i]);
         }
         IsThereAnyMoney += ChekerMoney;
     }
@@ -171,9 +185,10 @@ public class StocksManager : MonoBehaviour
         {
             item.precents.Clear();
         }
-        for (int i = 0;i < moneys.Count; i++)
+        for (int i = 0; i < moneys.Count; i++)
         {
             moneys[i] = PlayerPrefs.GetFloat("Money" + traders[i].nameTrader, 0);
+            traders[i].money = PlayerPrefs.GetFloat("Money" + traders[i].nameTrader, 0);
         }
         if (time > 0 && startGame)
         {
@@ -182,6 +197,7 @@ public class StocksManager : MonoBehaviour
         }
         if (time <= 0 && startGame)
         {
+            Ultra.stop();
             EndDay();
             foreach (var k in npcList)
             {
@@ -189,7 +205,7 @@ public class StocksManager : MonoBehaviour
                 k.SetState(k.buyStockBonus);
             }
             menu.DOLocalMoveY(0, 0.4f);
-            SpawnerNPC.stop();
+            spawn.enabled = false;
             startGame = false;
             playerController.enabled = false;
             timer.text = 0.ToString();
@@ -197,6 +213,7 @@ public class StocksManager : MonoBehaviour
             {
                 Destroy(item.gameObject);
             }
+            MainPerson.CheckWin();
             //foreach (var trader in traders)
             //{
             //    trader.ShowPrecent();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -64,7 +65,7 @@ public class BestBuyManager : MonoBehaviour
             u -= 1;
         }
         string n = "";
-        foreach (var k in keyValuePairs.Keys)
+        foreach (var k in keyValuePairs.Keys.ToList())
         {
             if (n == "")
             {
@@ -76,15 +77,10 @@ public class BestBuyManager : MonoBehaviour
                 n = k;
             }
         }
-        foreach(var r in keyValuePairs.Keys)
+        foreach(var r in keyValuePairs.Keys.ToList())
         {
             names.Add(r);
             rate.Add(keyValuePairs[r]);
-        }
-        print(nameTrader);
-        foreach(var r in keyValuePairs)
-        {
-            print(r.Key + "   " + r.Value);
         }
         foreach(var k in other)
         {
@@ -118,17 +114,20 @@ public class BestBuyManager : MonoBehaviour
     }
     public void Sell(Traders tr)
     {
-        foreach(var item in tr.precentsOfOther.Keys)
+        if (tr.precentsOfOther.Keys.Count > 0)
         {
-            foreach(var t in tr.precentsOfOther[item].Keys)
+            foreach (var item in tr.precentsOfOther.Keys.ToList())
             {
-                float res = tr.SellPrice(item, t);
-                float other = tr.precentsOfOther[item][t].total * tr.precentsOfOther[item][t].costOneStock;
-                if (res > other * 3)
+                foreach (var t in tr.precentsOfOther[item].Keys.ToList())
                 {
-                    tr.SellPrecents(item, t);
+                    float res = tr.SellPrice(item, t);
+                    float other = tr.precentsOfOther[item][t].total * tr.precentsOfOther[item][t].costOneStock;
+                    if (res > other * 3)
+                    {
+                        tr.SellPrecents(item, t);
+                    }
+                    break;
                 }
-                break;
             }
         }
     }
@@ -165,11 +164,11 @@ public class BestBuyManager : MonoBehaviour
         float p = 0;
         foreach (var item in traders)
         {
-            foreach (var t in item.precentsOfOther.Keys)
+            foreach (var t in item.precentsOfOther.Keys.ToList())
             {
                 if (t == nameTr)
                 {
-                    foreach(var y in item.precentsOfOther[t].Keys)
+                    foreach(var y in item.precentsOfOther[t].Keys.ToList())
                     {
                         p += y;
                         break;

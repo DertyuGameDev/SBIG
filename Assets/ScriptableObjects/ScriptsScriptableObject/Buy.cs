@@ -8,6 +8,7 @@ public class Buy : Stating
     public float timeMind;
     public float time;
     public float radius;
+    public GameObject dollar;
     public Stating walkState;
     public override void Init()
     {
@@ -35,6 +36,8 @@ public class Buy : Stating
             npc.nav.isStopped = true;
             Traders tr = StocksManager.dTr[npc.nameTr];
             tr.countBuyToday += 1;
+            Instantiate(dollar, new Vector3(npc.posOfStation.position.x + (npc.posOfStation.position.x / 2 - npc.transform.position.x / 2),
+                npc.posOfStation.position.y + (npc.posOfStation.position.y / 2 - npc.transform.position.y / 2), 0), Quaternion.identity);
             npc.money -= tr.costOneStock;
             npc.posOfStation = null;
             npc.SetState(walkState);

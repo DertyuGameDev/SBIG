@@ -18,4 +18,5 @@ MonoBehaviour:
   timeMind: 2
   time: 0
   radius: 4
+  dollar: {fileID: 5047871835676543410, guid: 6b96862ccf3c4bb49b140d25616f24ec, type: 3}
   walkState: {fileID: 11400000, guid: 44078c7922d927d43aaedb9fe592154f, type: 2}

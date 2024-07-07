@@ -51,4 +51,13 @@ public class CameraFollow : MonoBehaviour
         vignete.intensity.value = Mathf.Lerp(vignete.intensity.value, 2 * vibro, speedLerp * Time.deltaTime);
         camera.transform.localPosition = Vector3.Lerp(camera.transform.localPosition, new Vector3(x, y, 0), lerp * 0.01f);
     }
+    public void StopShake()
+    {
+        shake = false;
+        vignete.intensity.value = 0;
+    }
+    public void StartShake()
+    {
+        shake = true;
+    }
 }

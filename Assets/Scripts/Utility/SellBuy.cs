@@ -56,6 +56,7 @@ public class SellBuy : MonoBehaviour
             PlayerPrefs.SetFloat("MoneyGosha", PlayerPrefs.GetFloat("MoneyGosha", 0) - me.countStocksNow / 100 * buysSlider.value * me.costOneStock);
             StocksManager.MainPerson.BuyPrecents(me, buysSlider.value);
         }
+        StocksManager.MainPerson.CheckWin();
     }
     private void Update()
     {

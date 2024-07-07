@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     float horizontal;
     float vertical;
     public float runSpeed = 20.0f;
+    public MicrophoneInput mic;
+    public Slider slider;
     public Animator animator;
     Rigidbody2D body;
 
@@ -16,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (mic.enabled == false)
+        {
+            slider.value = 0;
+        }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         animator.SetFloat("XInput", horizontal);

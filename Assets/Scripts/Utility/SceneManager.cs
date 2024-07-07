@@ -7,4 +7,8 @@ public class SceneManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+    public void StartScene(int i)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(i);
+    }
 }
