@@ -2,18 +2,21 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class StocksManager : MonoBehaviour
 {
     public static Traders MainPerson;
     public static int countDays;
     public static float moneyStart = 0;
+    public static Action cont;
     public static Func<float, string> IsThereAnyMoney;
     public static Dictionary<string, Transform> positions = new Dictionary<string, Transform>();
     public static Dictionary<string, Traders> dTr = new Dictionary<string, Traders>();
 
-    public GameObject spawner;
-    public Animator animator, stock;
+    public PlayerController playerController;
+    public GameObject lose, win;
+    public Transform menu;
     public TextMeshProUGUI timer;
     public bool startGame = true;
     public float time;
@@ -23,8 +26,45 @@ public class StocksManager : MonoBehaviour
     public List<float> moneys = new List<float>();
     public List<Traders> traders;
     public List<Transform> stands = new List<Transform>();
+
+    public void Lose()
+    {
+        Time.timeScale = 0;
+        lose.gameObject.SetActive(true);
+    }
+
+    public void AudioEn(bool t)
+    {
+        foreach (var k in npcList)
+        {
+            k.gameObject.GetComponent<AudioSource>().enabled = t;
+        }
+    }
+
+    public void Win()
+    {
+        Time.timeScale = 0;
+        win.gameObject.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        startGame = true;
+        time = 160;
+        SpawnerNPC.start();
+        menu.DOLocalMoveY(-1165, 0.4f);
+        playerController.enabled = true;
+        playerController.transform.position = new Vector3(13.86f, -7.421f, 0);
+        foreach (var k in npcList)
+        {
+            k.gameObject.GetComponent<AudioSource>().enabled = true;
+            k.gameObject.GetComponent<AudioSource>().Play();
+            k.SetState(k.scream);
+        }
+    }
     private void Awake()
     {
+        cont += StartGame;
         foreach (var item in traders)
         {
             PlayerPrefs.SetFloat("Money" + item.nameTrader, 0);
@@ -69,6 +109,11 @@ public class StocksManager : MonoBehaviour
         foreach (var trader in traders)
         {
             trader.GivePrecents();
+        }
+        foreach (var trader in traders)
+        {
+            trader.countBuyToday = 0;
+            trader.countSellToday = 0;
         }
     }
     public string ChekerMoney(float money)
@@ -132,7 +177,6 @@ public class StocksManager : MonoBehaviour
         }
         if (time > 0 && startGame)
         {
-            animator.SetBool("Open", false);
             time -= Time.deltaTime;
             timer.text = Mathf.RoundToInt(time).ToString();
         }
@@ -144,11 +188,11 @@ public class StocksManager : MonoBehaviour
                 k.gameObject.GetComponent<AudioSource>().enabled = false;
                 k.SetState(k.buyStockBonus);
             }
+            menu.DOLocalMoveY(0, 0.4f);
+            SpawnerNPC.stop();
             startGame = false;
+            playerController.enabled = false;
             timer.text = 0.ToString();
-            spawner.SetActive(false);
-            stock.SetBool("Open", true);
-            animator.SetBool("Open", true);
             foreach (var item in GameObject.FindGameObjectsWithTag("NPC"))
             {
                 Destroy(item.gameObject);

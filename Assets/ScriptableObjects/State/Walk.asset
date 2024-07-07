@@ -16,6 +16,6 @@ MonoBehaviour:
   npc: {fileID: 0}
   radius: 3
   time: 0
-  maxTime: 5
+  maxTime: 7
   idle: {fileID: 11400000, guid: 0462ccf9128f60d41aab8de21283effa, type: 2}
   buy: {fileID: 11400000, guid: e85aef86a43921e45871908a6c336fd3, type: 2}

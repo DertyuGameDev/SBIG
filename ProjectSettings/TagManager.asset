@@ -6,6 +6,9 @@ TagManager:
   tags:
   - NPC
   - Point
+  - Stand
+  - Cost
+  - Pet
   layers:
   - Default
   - TransparentFX

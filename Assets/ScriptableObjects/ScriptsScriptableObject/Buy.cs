@@ -15,6 +15,9 @@ public class Buy : Stating
     }
     public override void Doing()
     {
+        npc.animator.SetFloat("XInput", Mathf.Clamp(npc.posOfStation.position.x - npc.transform.position.x, -1, 1));
+        npc.animator.SetFloat("YInput", Mathf.Clamp(npc.posOfStation.position.y - npc.transform.position.y, -1, 1));
+        npc.animator.SetFloat("AnimMag", 0);
         if (Vector3.Distance(npc.transform.position, npc.posOfStation.position) > radius)
         {
             npc.nav.isStopped = true;

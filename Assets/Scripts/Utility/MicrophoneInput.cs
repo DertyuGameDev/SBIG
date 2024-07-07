@@ -28,6 +28,7 @@ public class MicrophoneInput : MonoBehaviour
     {
         me.voiceStrenght = 0;
         slider.value = 0;
+        result = 0;
     }
     public void MicrophoneChoose()
     {
@@ -81,6 +82,7 @@ public class MicrophoneInput : MonoBehaviour
     }
     private void Update()
     {
+        print(PlayerPrefs.GetFloat("Sensitivity"));
         if (sensSlider)
         {
             PlayerPrefs.SetFloat("Sensitivity", sensSlider.value);
@@ -95,6 +97,11 @@ public class MicrophoneInput : MonoBehaviour
             slider.value = loud * PlayerPrefs.GetFloat("Sensitivity") + bonus.bonusToVoice;
         }
         else
+        {
+            result = loud * PlayerPrefs.GetFloat("Sensitivity");
+            slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");
+        }
+        if (sensSlider)
         {
             result = loud * PlayerPrefs.GetFloat("Sensitivity");
             slider.value = loud * PlayerPrefs.GetFloat("Sensitivity");

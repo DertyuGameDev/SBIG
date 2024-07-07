@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3373e193ffa73ef4a8edf86459ae5325, type: 3}
   m_Name: Traders2
   m_EditorClassIdentifier: 
-  MyPortret: {fileID: 1555695727865631640, guid: 35ce9ac2858dafa4eba2482674f0dc1f, type: 3}
+  MyPortret: {fileID: -5181052464605647100, guid: e11fe499bb360cf4f95069dbff9f9f1e, type: 3}
   nameTrader: Alpha(nagan)
-  costOneStock: 10
-  countStocksNow: 0
+  costOneStock: 3.39
+  countStocksNow: 7
   main: 0
-  countBuyToday: 0
-  countSellToday: 0
-  limitToSell: 10
-  total: 0
-  upCost: 0
+  countBuyToday: 3
+  countSellToday: 2
+  limitToSell: 16
+  total: 1
+  upCost: 0.1
   voiceStrenght: 0.2
   precents: []
-  stocksInfo: []
+  stocksInfo:
+  - 27.810001
+  - 60.420002
+  - 73.83001

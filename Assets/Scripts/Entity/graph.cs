@@ -22,7 +22,14 @@ public class graph : MonoBehaviour
     public int ind;
     public string GetDay()
     {
-        return "Day: " + ind + ": " + (Points[ind].transform.position.y * 1000).ToString() + "$ ";
+        if (Points.Length > 0)
+        {
+            return "Day: " + ind + ": " + (Points[ind].transform.position.y * 1000).ToString() + "$ ";
+        }
+        else
+        {
+            return "Day: " + 0 + ": " + 0 + "$ ";
+        }
     }
     private void Update()
     {

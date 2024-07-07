@@ -1,19 +1,25 @@
+using DG.Tweening;
+using System.Collections;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
+    [HideInInspector] public float time;
     public static float delayIdle = 2;
     public float dist;
     public Vector3 pos;
-
+    public Animator animator;
+    
     public Stating startState;
     public Stating idleState;
     public Stating walkState;
     public Stating buyState;
     public NavMeshAgent nav;
 
+    public float lifeTime;
+    [HideInInspector] public bool already;
     public float speed = 2, speedRot = 2;
     public Stating currentState;
     [HideInInspector] public Transform posOfStation;
@@ -24,13 +30,31 @@ public class NPC : MonoBehaviour
     [HideInInspector] public string nameTr;
     void Start()
     {
+        animator.SetBool(string.Format("{0}", Random.Range(1, 4)), true);
         money = StocksManager.moneyStart;
         nav.updateRotation = false;
         nav.updateUpAxis = false;
         SetState(startState);
     }
+    public void Dest()
+    {
+        already = true;
+    }
+    public IEnumerator dest()
+    {
+        yield return new WaitForSeconds(1);
+        SpawnerNPC.drop();
+        Destroy(gameObject);
+    }
     void Update()
     {
+        time += Time.deltaTime;
+        if (already)
+        {
+            GetComponent<SpriteRenderer>().DOFade(0, 1);
+            StartCoroutine(dest());
+            already = false;
+        }
         if (nameTr != "")
         {
             posOfStation = StocksManager.positions[nameTr];

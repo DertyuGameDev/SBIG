@@ -16,17 +16,12 @@ MonoBehaviour:
   nameTrader: Gosha
   costOneStock: 10
   countStocksNow: 0
-  main: 0
-  countBuyToday: 0
+  main: 1
+  countBuyToday: 10
   countSellToday: 0
   limitToSell: 10
   total: 0
   upCost: 0
-  voiceStrenght: 0.00038337708
+  voiceStrenght: 0
   precents: []
-  stocksInfo:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 234
+  stocksInfo: []

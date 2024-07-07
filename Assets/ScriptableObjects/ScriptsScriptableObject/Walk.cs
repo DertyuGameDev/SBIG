@@ -14,6 +14,9 @@ public class Walk : Stating
     }
     public override void Doing()
     {
+        npc.animator.SetFloat("XInput", Mathf.Clamp(npc.nav.velocity.x, -1, 1));
+        npc.animator.SetFloat("YInput", Mathf.Clamp(npc.nav.velocity.y, -1, 1));
+        npc.animator.SetFloat("AnimMag", npc.nav.velocity.y * npc.nav.velocity.y + npc.nav.velocity.x * npc.nav.velocity.x);
         if (Vector2.Distance(npc.transform.position, npc.posOfStation.position) <= radius) 
         {
             npc.nav.isStopped = true;

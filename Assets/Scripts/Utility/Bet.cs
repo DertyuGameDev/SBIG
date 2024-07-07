@@ -15,7 +15,7 @@ public class Bet : MonoBehaviour
     public Slider mainMicro;
     public Button chooseBut, rollBut;
     public Image nowBet;
-    public GameObject cube;
+    public GameObject cube, exit;
     public GameObject imageCube;
     public AnimationClip rolling;
     public AnimationClip[] animations;
@@ -29,10 +29,6 @@ public class Bet : MonoBehaviour
     [Range(0f, 100f)]
     public float indicator;
     bool roll;
-    private void Start()
-    {
-        PlayerPrefs.SetFloat("MoneyGosha", 100);
-    }
     public void Update()
     {
         progress.value = indicator;
@@ -64,6 +60,7 @@ public class Bet : MonoBehaviour
                 indicator = 0;
                 micro.slider = mainMicro;
                 roll = false;
+                exit.transform.DOLocalMoveY(432, 0.1f);
                 imageCube.transform.DOScale(1, 1);
                 nowBet.transform.DOMoveY(444, 1);
                 progress.transform.DOLocalMoveY(-600, 1);
@@ -104,6 +101,7 @@ public class Bet : MonoBehaviour
         indicator = 20;
         micro.slider = test;
         roll = true;
+        exit.transform.DOLocalMoveY(676, 0.1f);
         nowBet.transform.DOMoveY(666, 1);
         progress.transform.DOLocalMoveY(-400, 1);
         mainMicro.transform.DOLocalMoveX(-1123, 1);

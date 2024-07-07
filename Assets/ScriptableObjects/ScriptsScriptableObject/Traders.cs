@@ -61,13 +61,13 @@ public class Traders : ScriptableObject
         costOneStock += upCost;
         stocksInfo.Add(countStocksNow * costOneStock);
         float g = total * costOneStock;
-        float prother = BestBuyManager.getPrecent(nameTrader);
-        if (costOneStock <= 0 || prother == 0)
+        float freePrecent = BestBuyManager.getPrecent(nameTrader);
+        if (costOneStock <= 0 || freePrecent == 0)
         {
             // end
         }
-        stocksInfo[stocksInfo.Count - 1] -= g * prother / 100;
-        PlayerPrefs.SetFloat("Money" + nameTrader, PlayerPrefs.GetFloat("Money" + nameTrader, 0) + g * prother / 100);
+        stocksInfo[stocksInfo.Count - 1] -= g * (100 - freePrecent) / 100;
+        PlayerPrefs.SetFloat("Money" + nameTrader, PlayerPrefs.GetFloat("Money" + nameTrader, 0) + g * freePrecent / 100);
     }
     public void BuyPrecents(Traders trader, float precent)
     {

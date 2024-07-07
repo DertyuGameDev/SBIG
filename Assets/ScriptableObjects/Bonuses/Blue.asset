@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Blue
   m_EditorClassIdentifier: 
   cost: 200
-  bonusToVoice: 0.1
+  bonusToVoice: 0.2
   Name: Blue
   sprite: {fileID: 1555695727865631640, guid: 35ce9ac2858dafa4eba2482674f0dc1f, type: 3}

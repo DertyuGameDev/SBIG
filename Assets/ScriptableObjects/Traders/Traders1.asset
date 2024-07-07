@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3373e193ffa73ef4a8edf86459ae5325, type: 3}
   m_Name: Traders1
   m_EditorClassIdentifier: 
-  MyPortret: {fileID: 4329407632164072968, guid: 405175f1cab4aa54d896881688c78e67, type: 3}
+  MyPortret: {fileID: -3301584803809674874, guid: 95cf70c8029039543a3268cb92bf2e04, type: 3}
   nameTrader: Sviat
   costOneStock: 10
   countStocksNow: 0
   main: 0
-  countBuyToday: 0
+  countBuyToday: 230
   countSellToday: 0
   limitToSell: 10
   total: 0
   upCost: 0
-  voiceStrenght: 0.2
+  voiceStrenght: 0
   precents: []
   stocksInfo: []

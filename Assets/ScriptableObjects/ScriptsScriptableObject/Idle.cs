@@ -14,6 +14,9 @@ public class Idle : Stating
     }
     public override void Doing()
     {
+        npc.animator.SetFloat("XInput", 0);
+        npc.animator.SetFloat("YInput", -1);
+        npc.animator.SetFloat("AnimMag", 0);
         time += Time.deltaTime;
         if (time >= idleTime)
         {

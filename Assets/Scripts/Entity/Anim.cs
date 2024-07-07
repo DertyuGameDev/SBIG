@@ -1,19 +1,21 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Anim : MonoBehaviour
 {
-    public GameObject g;
-    public void SetupAnim(Animator animator)
+    public bool open;
+    public void SetupAnim(Transform p)
     {
-        animator.SetBool("Open", !animator.GetBool("Open"));
-        if (animator.GetBool("Open"))
+        if (open)
         {
-            g.SetActive(true);
+            p.transform.DOLocalMoveY(-1165, 0.4f);
+            open = false;
         }
         else
         {
-            g.SetActive(false);
+            p.transform.DOLocalMoveY(0, 0.4f);
+            open = true;
         }
     }
 }

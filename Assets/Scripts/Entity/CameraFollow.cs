@@ -17,9 +17,14 @@ public class CameraFollow : MonoBehaviour
     public MicrophoneInput input;
     public Transform camera;
     public bool shake;
+    public float speedLerp;
     public float strenght;
     public float vibro;
     public float lerp;
+    private void Awake()
+    {
+        volume.profile.TryGet(out vignete);
+    }
     void FixedUpdate()
     {
         Vector3 newPos = new Vector3(Mathf.Clamp(target.position.x, -2.40f, 18f), Mathf.Clamp(target.position.y + yOffset, -7.95f, 1.10f), -10f);
@@ -30,13 +35,20 @@ public class CameraFollow : MonoBehaviour
             float x = Random.Range(-vibro * strenght, vibro * strenght);
             float y = Random.Range(-vibro * strenght, vibro * strenght);
             vibro = input.result;
-            volume.profile.TryGet(out vignete);
-            vignete.intensity.value = 0.3f * vibro;
+            vignete.intensity.value = Mathf.Lerp(vignete.intensity.value, 2 * vibro, speedLerp * Time.deltaTime);
             camera.transform.localPosition = Vector3.Lerp(camera.transform.localPosition, new Vector3(x, y, 0), lerp * 0.01f);
         }
         else
         {
             camera.transform.localPosition = Vector3.zero;
         }
+    }
+    public void Shake(float v, float lerp, float strenght)
+    {
+        shake = false;
+        float x = Random.Range(-v * strenght, v * strenght);
+        float y = Random.Range(-v * strenght, v * strenght);
+        vignete.intensity.value = Mathf.Lerp(vignete.intensity.value, 2 * vibro, speedLerp * Time.deltaTime);
+        camera.transform.localPosition = Vector3.Lerp(camera.transform.localPosition, new Vector3(x, y, 0), lerp * 0.01f);
     }
 }

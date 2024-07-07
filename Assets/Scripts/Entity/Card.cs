@@ -43,7 +43,17 @@ public class Card : MonoBehaviour
     {
         if (PlayerPrefs.GetString("NowBonusGosha", "") == nameText.text)
         {
-            MicrophoneInput.bonus = bonus;
+            if (MicrophoneInput.bonus == null)
+            {
+                MicrophoneInput.bonus = bonus;
+            }
+            else
+            {
+                if (MicrophoneInput.bonus.Name != "Ulta")
+                {
+                    MicrophoneInput.bonus = bonus;
+                }
+            }
         }
         if (state == State.SELECTED && PlayerPrefs.GetString("NowBonusGosha", "") != nameText.text) 
         {

@@ -81,6 +81,11 @@ public class BestBuyManager : MonoBehaviour
             names.Add(r);
             rate.Add(keyValuePairs[r]);
         }
+        print(nameTrader);
+        foreach(var r in keyValuePairs)
+        {
+            print(r.Key + "   " + r.Value);
+        }
         foreach(var k in other)
         {
             if (k.nameTrader == n)
